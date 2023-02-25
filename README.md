@@ -1,7 +1,7 @@
 # Binary-to-ATE
 Created a Perl program to convert firmware code from binary to ATE (automatic test equipment) code format to streamline test code loading flow for NXP Semiconductors N.V. NXP Semiconductors N.V. is a Dutch semiconductor designer and manufacturer which employs approximately 30,000 people in more than 30 countries. 
 
-I have code for both C++ and Perl implementation
+I have code for both Java and Perl implementation
 
 Task Description: 
 DFT function pattern conversion Flow
