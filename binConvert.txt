@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+my $fileName = "IN.bin";
+open(FH, '<', $fileName) or die $!;
+
+my $des = 'OUTPUT.txt';
+open(DES,'>',$des) or die $!;
+
+print DES ("jtag.drload(`CPU1LOAD_CMD_SIZE, (16'h0000 << 5) | (16'h0 << 4) | (16'h1 << 3) | 16'h2, 16'h0, 16'h0,rdata);\n");
+print DES ("jtag.serial_access(`CPU1LOAD_DATA);\n");
+
+my @location=(6, 7, 4, 5, 2, 3, 0, 1);
+while(<FH>){
+    my $str=$_;
+    $str=substr($str, 0, index($str, '|'));
+    $str =~ s/\s+//g;
+    foreach(8, 16, 24, 32){
+        my $str2="";
+        my $i=$_;
+        for(0..7){
+            $str2=$str2 . substr($str, $i+$location[$_], 1);
+        }
+        print DES "jtag.drload(32, 32'h$str2, 8'h0, 8'h0, rdata);\n";
+    }
+}
+
+close(FH);
+close(DES);
